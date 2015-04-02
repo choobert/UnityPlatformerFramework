@@ -6,7 +6,7 @@ public delegate void OnStateChangeHandler();
 public class GameManager : MonoBehaviour {
 	
 	private static GameManager _instance;
-	private static HUD _hud;
+	private static HUD _hud = HUD.Instance;
 	
 	public event OnStateChangeHandler OnStateChange;
 	public GameState gameState {get; private set;}

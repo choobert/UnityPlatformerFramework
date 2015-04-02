@@ -7,9 +7,21 @@ using System.Collections;
 public class HUD : MonoBehaviour {
 
 	private static HUD _instance;	
+	private static GameManager gm;
 	
 	private static Button pauseButton;
-	private static Button voilaButton;
+	private static Button settingsButton;
+	private static Button quitButton;
+	
+	private static Sprite playSprite;
+	private static Sprite pauseSprite;
+	
+	private static GameObject quitPanel;
+	private static Button confirmQuitButton;
+	private static Button cancelQuitButton;
+	
+	private static GameObject settingsPanel;
+	
 	
 	/*
 	* Find/Create/Return our one and only Pause Menu object
@@ -32,10 +44,13 @@ public class HUD : MonoBehaviour {
 				_instance 		= go.AddComponent<HUD>();
 				DontDestroyOnLoad(go);
 
-				
+				// Lets go ahead and grab a reference to the GameManager to shorted all the text each time
+				gm = GameManager.Instance;
+				gm.OnStateChange += onGameStateChange;
 				
 				// Now that we have created the Base object we need to add our HUD components to it
-				GameObject mainCanvas = (GameObject) Instantiate(Resources.Load ("Canvas"), new Vector3(), Quaternion.identity);
+				GameObject mainCanvas = (GameObject) Instantiate(Resources.Load ("HUD/Canvas"), new Vector3(), Quaternion.identity);
+				DontDestroyOnLoad(mainCanvas);
 				
 				// Set up our Event System (this would happen naturally by adding a Canvas through the UI)
 				GameObject eventSystem = new GameObject("EventSystem");
@@ -46,20 +61,86 @@ public class HUD : MonoBehaviour {
 				pauseButton = GameObject.Find ("PauseButton").GetComponent<Button>();
 				pauseButton.onClick.AddListener(() => onPauseButtonClick());
 				
-				voilaButton = GameObject.Find ("VoilaButton").GetComponent<Button>();
-				voilaButton.onClick.AddListener(() => onVoilaButtonClick());
+				playSprite = Resources.Load<Sprite>("HUD/Play");
+				pauseSprite = Resources.Load<Sprite>("HUD/Pause");
+				
+				
+				settingsButton = GameObject.Find ("SettingsButton").GetComponent<Button>();
+				settingsButton.onClick.AddListener(() => onSettingsButtonClick());
+				
+				quitButton = GameObject.Find ("QuitButton").GetComponent<Button>();
+				quitButton.onClick.AddListener(() => onQuitButtonClick());
+				
+				quitPanel = (GameObject) GameObject.Find("QuitPanel");
+				confirmQuitButton = GameObject.Find("ConfirmQuit").GetComponent<Button>();
+				confirmQuitButton.onClick.AddListener(() => onConfirmQuitButtonClick());
+				
+				cancelQuitButton = GameObject.Find("CancelQuit").GetComponent<Button>();
+				cancelQuitButton.onClick.AddListener(() => onCancelQuitButtonClick());
+				
+				settingsPanel = (GameObject) GameObject.Find ("SettingsPanel");
 			}
 			
 			return _instance;
 		}
 	}
+	
+	private static void onGameStateChange() {
+		if(gm.gameState == GameState.PauseMenu) {
+			pauseButton.image.sprite = playSprite;
+			
+			pauseButton.gameObject.SetActive(true);
+			settingsButton.gameObject.SetActive(true);		
+			quitButton.gameObject.SetActive(true);
+			
+			quitPanel.SetActive(false);
+			settingsPanel.SetActive(false);
+		}
+		else if (gm.gameState == GameState.Game) {
+			pauseButton.image.sprite = pauseSprite;
+			
+			pauseButton.gameObject.SetActive(true);
+			settingsButton.gameObject.SetActive(false);
+			quitButton.gameObject.SetActive(false);
+			
+			quitPanel.SetActive(false);
+			settingsPanel.SetActive(false);
+		}
+		else {
+			pauseButton.gameObject.SetActive(false);
+			settingsButton.gameObject.SetActive(false);
+			quitButton.gameObject.SetActive(false);
+			
+			quitPanel.SetActive(false);
+			settingsPanel.SetActive(false);
+		}		
+	}
 
 	private static void onPauseButtonClick() {
-		Debug.Log ("Pressed Pause Button!");
-		voilaButton.gameObject.SetActive(!voilaButton.gameObject.activeSelf);		
+		if(gm.gameState == GameState.PauseMenu) {
+			gm.SetGameState(GameState.Game);	
+		}
+		else if (gm.gameState == GameState.Game) {
+			gm.SetGameState(GameState.PauseMenu);				
+		}		
 	}
 	
-	private static void onVoilaButtonClick() {
-		Debug.Log ("Pressed Voila Button!");
+	private static void onSettingsButtonClick() {
+		Debug.Log ("Pressed Settings Button!");
+		settingsPanel.SetActive(true);
+	}
+	
+	private static void onQuitButtonClick() {
+		Debug.Log ("Clicked Quit Button!");
+		quitPanel.SetActive(true);
+	}
+	
+	private static void onConfirmQuitButtonClick() {
+		Debug.Log ("Confirmed Quit!");
+	}
+	
+	private static void onCancelQuitButtonClick() {
+		Debug.Log ("Canceled Quit!");
+		quitPanel.SetActive(false);
 	}
 }
