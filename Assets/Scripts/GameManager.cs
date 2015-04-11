@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.EventSystems;
 
 public enum GameState {NullState, MainMenu, PauseMenu, Game}
 public delegate void OnStateChangeHandler();
@@ -7,6 +8,8 @@ public class GameManager : MonoBehaviour {
 	
 	private static GameManager _instance;
 	private static HUD _hud = HUD.Instance;
+	private static Settings _settings = Settings.Instance;
+	private static Quit _quit = Quit.Instance;
 	
 	public event OnStateChangeHandler OnStateChange;
 	public GameState gameState {get; private set;}
@@ -31,11 +34,21 @@ public class GameManager : MonoBehaviour {
 			{
 				GameObject go = new GameObject("_GameManager");
 				DontDestroyOnLoad(go);
-				_instance = go.AddComponent<GameManager>();
+				_instance = go.AddComponent<GameManager>();				
+
+
+				// Before we start creating the UI lets create the event system
+				// This would happen naturally by adding a Canvas through the UI)
+				GameObject eventSystem = new GameObject("_EventSystem");
+				eventSystem.AddComponent<EventSystem>();
+				eventSystem.AddComponent<StandaloneInputModule>();
+				eventSystem.AddComponent<TouchInputModule>();
+				DontDestroyOnLoad(eventSystem);
 				
-
-				_hud = HUD.Instance;
-
+				// Now lets just create our blank canvas, that all of our GUI will be a part of
+				GameObject gui = (GameObject) Instantiate(Resources.Load ("GUI/MainCanvas"), new Vector3(), Quaternion.identity);
+				gui.name = "_GUI";
+				DontDestroyOnLoad(gui);
 			}
 			
 			return _instance;
