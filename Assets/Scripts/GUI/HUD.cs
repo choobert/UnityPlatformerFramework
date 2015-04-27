@@ -101,20 +101,24 @@ public class HUD : MonoBehaviour {
 
 	private static void onPauseButtonClick() {
 		if(gm.gameState == GameState.PauseMenu) {
+			Debug.Log("HUD:onPauseButtonClick = Setting Game State: " + GameState.Game);
 			gm.SetGameState(GameState.Game);	
 		}
 		else if (gm.gameState == GameState.Game) {
+			Debug.Log("HUD:onPauseButtonClick = Setting Game State: " + GameState.PauseMenu);
 			gm.SetGameState(GameState.PauseMenu);				
 		}		
 	}
 	
 	private static void onSettingsButtonClick() {
 		Debug.Log ("Pressed Settings Button!");
+		Quit.displayQuit(false);
 		Settings.displaySettings(true);
 	}
 	
 	private static void onQuitButtonClick() {
 		Debug.Log ("Clicked Quit Button!");
 		Quit.displayQuit(true);
+		Settings.displaySettings(false);
 	}
 }

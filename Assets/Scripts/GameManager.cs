@@ -1,15 +1,17 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum GameState {NullState, MainMenu, PauseMenu, Game}
+public enum GameState {NullState, MainMenu, Game, PauseMenu}
 public delegate void OnStateChangeHandler();
 
 public class GameManager : MonoBehaviour {
 	
 	private static GameManager _instance;
-	private static HUD _hud = HUD.Instance;
-	private static Settings _settings = Settings.Instance;
-	private static Quit _quit = Quit.Instance;
+	
+	private static MainMenu _mainmenu   = MainMenu.Instance;
+	private static HUD 		_hud 		= HUD.Instance;
+	private static Settings _settings 	= Settings.Instance;
+	private static Quit 	_quit 		= Quit.Instance;
 	
 	public event OnStateChangeHandler OnStateChange;
 	public GameState gameState {get; private set;}
@@ -34,8 +36,8 @@ public class GameManager : MonoBehaviour {
 			{
 				GameObject go = new GameObject("_GameManager");
 				DontDestroyOnLoad(go);
-				_instance = go.AddComponent<GameManager>();				
-
+				_instance = go.AddComponent<GameManager>();
+				_instance.OnStateChange += OnGameStateChange;
 
 				// Before we start creating the UI lets create the event system
 				// This would happen naturally by adding a Canvas through the UI)
@@ -60,10 +62,31 @@ public class GameManager : MonoBehaviour {
 	* been added
 	**/
 	public void SetGameState(GameState aGameState) {
-		gameState = aGameState;
+		if (gameState != aGameState) {
+			gameState = aGameState;
 		
-		if(OnStateChange != null) {
-			OnStateChange();
+			if(OnStateChange != null) {
+				OnStateChange();
+			}
+		}
+	}
+	
+	private static void OnGameStateChange() {
+		
+		if (_instance.gameState == GameState.MainMenu) {
+			Debug.Log("Loading Main Menu");
+			Application.LoadLevel(0);
+		}
+		else if(_instance.gameState == GameState.Game) {
+			Application.LoadLevel(1);
+			
+			Debug.Log("Changing timeScale from: " + Time.timeScale);
+			Time.timeScale = 1;
+		}
+		else if (_instance.gameState == GameState.PauseMenu)
+		{
+			Debug.Log("Changing timeScale from: " + Time.timeScale);
+			Time.timeScale = 0;
 		}
 	}
 }

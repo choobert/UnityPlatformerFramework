@@ -58,7 +58,7 @@ public class Quit : MonoBehaviour {
 	}
 	
 	private static void onConfirmClick() {
-		Debug.Log ("Confirmed Quit!");
+		Debug.Log("Quit:onConfirmQuit = Setting Game State: " + GameState.MainMenu);
 		gm.SetGameState(GameState.MainMenu);
 	}
 	
