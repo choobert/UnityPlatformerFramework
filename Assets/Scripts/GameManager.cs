@@ -85,7 +85,7 @@ public class GameManager : MonoBehaviour {
 		}
 		else if (_instance.gameState == GameState.PauseMenu)
 		{
-			Debug.Log("Changing timeScale from: " + Time.timeScale);
+			Debug.Log("Changing timeScale from: " + Time.timeScale + " to 0");
 			Time.timeScale = 0;
 		}
 	}
