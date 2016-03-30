@@ -6,6 +6,8 @@ public enum GameState {NullState, MainMenu, Game, PauseMenu}
 public delegate void OnStateChangeHandler();
 
 public class GameManager : MonoBehaviour {
+
+	public const string PLAYER_TAG = "Player";
 	
 	private static GameManager _instance;
 	
