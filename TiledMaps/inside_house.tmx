@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1">
+  <image source="../../../Documents/OneGameAMonth/Kenney Images/Roguelike/Spritesheet/roguelikeSheet_transparent.png" trans="ff00ff" width="968" height="526"/>
+ </tileset>
+ <layer name="House" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYKAO2MvEwLCbCLyPCbv+r0DxTGYGhiw8OJsZog6X/jSgfCoenEFAfyUDYTyqH7v+b3jimxj92OIeFt/E6McW96D4RnfXdxz6TzMyMJxBw2cZMd0FchMpgFL96P7KIFE/IQAAX1ZR1w==
+  </data>
+ </layer>
+ <layer name="House_Decals" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBhcYBEajcw+TYT+20wMDHeA+D4ThC8PxApALAvEctRxIk7QhMT+yMLA8AmKP7NAxGRIMEuLlYFBG4p1WCFikiToTwbqSYHiVFYSNA4g8GJEpYcToNRPStRxBgYAADkWDb4=
+  </data>
+ </layer>
+ <layer name="More_Decals" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAKGjBBMLjgGxJYU6D8AxaNgFOACAKG3AuU=
+  </data>
+ </layer>
+ <layer name="Even_More_Decals" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjFQAAAQAAAE=
+  </data>
+ </layer>
+</map>

@@ -27,6 +27,8 @@ public class MainMenu : MonoBehaviour {
 			{
 				_gm = GameManager.Instance;
 				_gm.OnStateChange += HandleOnStateChange;
+
+				_instance = _gm.gameObject.AddComponent<MainMenu> ();
 				
 				// Lets find our canvas that we must add ourselves to
 				GameObject guiCanvas = GameObject.Find ("_GUI");

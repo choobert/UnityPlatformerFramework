@@ -5,7 +5,7 @@ using System.Collections;
 public class Quit : MonoBehaviour {
 
 	private static Quit _instance;	
-	private static GameManager gm = GameManager.Instance;
+	private static GameManager _gm;
 	
 	private static GameObject quitPanel;
 	private static Button confirmButton;
@@ -28,10 +28,9 @@ public class Quit : MonoBehaviour {
 			// when the level changes
 			if (_instance == null)
 			{
-				GameObject go 	= new GameObject("_Quit");
-				_instance 		= go.AddComponent<Quit>();
-				DontDestroyOnLoad(go);
-				
+				_gm = GameManager.Instance;
+				_instance = _gm.gameObject.AddComponent<Quit> ();
+
 				// Lets find our canvas that we must add ourselves to
 				GameObject guiCanvas = GameObject.Find ("_GUI");
 				
@@ -39,7 +38,6 @@ public class Quit : MonoBehaviour {
 				quitPanel = (GameObject) Instantiate(Resources.Load ("GUI/QuitPanel"), new Vector3(), Quaternion.identity);
 				quitPanel.transform.SetParent(guiCanvas.transform);
 				quitPanel.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
-				DontDestroyOnLoad(quitPanel);
 				
 				// Lets hook up the buttons!
 				confirmButton = GameObject.Find ("ConfirmQuit").GetComponent<Button>();
@@ -59,7 +57,7 @@ public class Quit : MonoBehaviour {
 	
 	private static void onConfirmClick() {
 		Debug.Log("Quit:onConfirmQuit = Setting Game State: " + GameState.MainMenu);
-		gm.SetGameState(GameState.MainMenu);
+		_gm.SetGameState(GameState.MainMenu);
 	}
 	
 	private static void onCancelClick() {

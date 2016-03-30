@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 
 public enum GameState {NullState, MainMenu, Game, PauseMenu}
 public delegate void OnStateChangeHandler();
@@ -8,10 +9,10 @@ public class GameManager : MonoBehaviour {
 	
 	private static GameManager _instance;
 	
-	private static MainMenu _mainmenu   = MainMenu.Instance;
-	private static HUD 		_hud 		= HUD.Instance;
-	private static Settings _settings 	= Settings.Instance;
-	private static Quit 	_quit 		= Quit.Instance;
+	private static MainMenu _mainmenu;   
+	private static HUD _hud;
+	private static Settings _settings;
+	private static Quit _quit;
 	
 	public event OnStateChangeHandler OnStateChange;
 	public GameState gameState {get; private set;}
@@ -44,13 +45,32 @@ public class GameManager : MonoBehaviour {
 				GameObject eventSystem = new GameObject("_EventSystem");
 				eventSystem.AddComponent<EventSystem>();
 				eventSystem.AddComponent<StandaloneInputModule>();
-				eventSystem.AddComponent<TouchInputModule>();
 				DontDestroyOnLoad(eventSystem);
 				
 				// Now lets just create our blank canvas, that all of our GUI will be a part of
 				GameObject gui = (GameObject) Instantiate(Resources.Load ("GUI/MainCanvas"), new Vector3(), Quaternion.identity);
 				gui.name = "_GUI";
 				DontDestroyOnLoad(gui);
+
+				_mainmenu = MainMenu.Instance;
+				if (_mainmenu == null) {
+					Debug.LogError ("Failed to Instantiate MainMenu");
+				}
+
+				_hud = HUD.Instance;
+				if (_hud == null) {
+					Debug.LogError ("Failed to Instantiate HUD");
+				}
+
+				_settings = Settings.Instance;
+				if (_settings == null) {
+					Debug.LogError ("Failed to Instantiate Settings");
+				}
+
+				_quit = Quit.Instance;
+				if (_quit == null) {
+					Debug.LogError ("Failed to Instantiate Quit");
+				}
 			}
 			
 			return _instance;
@@ -75,11 +95,9 @@ public class GameManager : MonoBehaviour {
 		
 		if (_instance.gameState == GameState.MainMenu) {
 			Debug.Log("Loading Main Menu");
-			Application.LoadLevel(0);
+			SceneManager.LoadScene (0);
 		}
 		else if(_instance.gameState == GameState.Game) {
-			Application.LoadLevel(1);
-			
 			Debug.Log("Changing timeScale from: " + Time.timeScale);
 			Time.timeScale = 1;
 		}

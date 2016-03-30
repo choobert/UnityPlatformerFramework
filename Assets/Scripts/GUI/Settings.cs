@@ -5,7 +5,7 @@ using System.Collections;
 public class Settings : MonoBehaviour {
 
 	private static Settings _instance;	
-	private static GameManager gm = GameManager.Instance;
+	private static GameManager _gm;
 	
 	private static GameObject settingsPanel;
 	private static Button confirmButton;
@@ -28,9 +28,10 @@ public class Settings : MonoBehaviour {
 			// when the level changes
 			if (_instance == null)
 			{
-				GameObject go 	= new GameObject("_Settings");
-				_instance 		= go.AddComponent<Settings>();
-				DontDestroyOnLoad(go);
+				_gm = GameManager.Instance;
+				_gm.OnStateChange += onStateChange;
+
+				_instance = _gm.gameObject.AddComponent<Settings> ();
 				
 				// Lets find our canvas that we must add ourselves to
 				GameObject guiCanvas = GameObject.Find ("_GUI");
@@ -39,7 +40,6 @@ public class Settings : MonoBehaviour {
 				settingsPanel = (GameObject) Instantiate(Resources.Load ("GUI/SettingsPanel"), new Vector3(), Quaternion.identity);
 				settingsPanel.transform.SetParent(guiCanvas.transform);
 				settingsPanel.GetComponent<RectTransform>().localScale = new Vector3(1f, 1f, 1f);
-				DontDestroyOnLoad(settingsPanel);
 				
 				// Lets hook up the buttons!
 				confirmButton = GameObject.Find ("ConfirmSettings").GetComponent<Button>();
@@ -65,5 +65,10 @@ public class Settings : MonoBehaviour {
 	private static void onCancelClick() {
 		Debug.Log ("Canceled Settings!");
 		displaySettings(false);
+	}
+
+	private static void onStateChange ()
+	{
+		Debug.Log ("Game State changing to: " + _gm.gameState);
 	}
 }

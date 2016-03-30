@@ -7,7 +7,7 @@ using System.Collections;
 public class HUD : MonoBehaviour {
 
 	private static HUD _instance;	
-	private static GameManager gm = GameManager.Instance;
+	private static GameManager _gm;
 	
 	private static GameObject hudPanel;
 	private static Button pauseButton;
@@ -34,14 +34,12 @@ public class HUD : MonoBehaviour {
 			// when the level changes
 			if (_instance == null)
 			{
-				GameObject go 	= new GameObject("_HUD");
-				_instance 		= go.AddComponent<HUD>();
-				DontDestroyOnLoad(go);
-
 				// Lets go ahead and grab a reference to the GameManager to shorted all the text each time
-				gm = GameManager.Instance;
-				gm.OnStateChange += onGameStateChange;
-				
+				_gm = GameManager.Instance;
+				_gm.OnStateChange += onGameStateChange;
+
+				_instance = _gm.gameObject.AddComponent<HUD>();
+
 				// Lets find our canvas that we must add ourselves to
 				GameObject guiCanvas = GameObject.Find ("_GUI");				
 				
@@ -49,7 +47,6 @@ public class HUD : MonoBehaviour {
 				hudPanel = (GameObject) Instantiate(Resources.Load ("GUI/HUD"), new Vector3(), Quaternion.identity);
 				hudPanel.transform.SetParent(guiCanvas.transform);
 				hudPanel.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
-				DontDestroyOnLoad(hudPanel);
 
 				pauseButton = GameObject.Find ("PauseButton").GetComponent<Button>();
 				pauseButton.onClick.AddListener(() => onPauseButtonClick());
@@ -69,7 +66,7 @@ public class HUD : MonoBehaviour {
 	}
 	
 	private static void onGameStateChange() {
-		if(gm.gameState == GameState.PauseMenu || gm.gameState == GameState.Game) {
+		if(_gm.gameState == GameState.PauseMenu || _gm.gameState == GameState.Game) {
 			HUD.displayHUD(true);			
 			Quit.displayQuit(false);
 			Settings.displaySettings(false);
@@ -83,13 +80,13 @@ public class HUD : MonoBehaviour {
 	
 	private static void displayHUD(bool aEnable) {
 	
-		if (gm.gameState == GameState.PauseMenu) {
+		if (_gm.gameState == GameState.PauseMenu) {
 			pauseButton.image.sprite = playSprite;
 			
 			settingsButton.gameObject.SetActive(true);		
 			quitButton.gameObject.SetActive(true);
 		}
-		else if (gm.gameState == GameState.Game) {
+		else if (_gm.gameState == GameState.Game) {
 			pauseButton.image.sprite = pauseSprite;
 			
 			settingsButton.gameObject.SetActive(false);
@@ -100,13 +97,13 @@ public class HUD : MonoBehaviour {
 	}
 
 	private static void onPauseButtonClick() {
-		if(gm.gameState == GameState.PauseMenu) {
+		if(_gm.gameState == GameState.PauseMenu) {
 			Debug.Log("HUD:onPauseButtonClick = Setting Game State: " + GameState.Game);
-			gm.SetGameState(GameState.Game);	
+			_gm.SetGameState(GameState.Game);	
 		}
-		else if (gm.gameState == GameState.Game) {
+		else if (_gm.gameState == GameState.Game) {
 			Debug.Log("HUD:onPauseButtonClick = Setting Game State: " + GameState.PauseMenu);
-			gm.SetGameState(GameState.PauseMenu);				
+			_gm.SetGameState(GameState.PauseMenu);				
 		}		
 	}
 	

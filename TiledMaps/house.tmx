@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="16" height="16" tilewidth="16" tileheight="16" nextobjectid="1">
+ <tileset firstgid="1" name="roguelikeSheet_transparent" tilewidth="16" tileheight="16" spacing="1">
+  <image source="../../../Documents/OneGameAMonth/Kenney Images/Roguelike/Spritesheet/roguelikeSheet_transparent.png" trans="ff00ff" width="968" height="526"/>
+  <terraintypes>
+   <terrain name="water" tile="-1"/>
+  </terraintypes>
+  <tile id="2" terrain="0,0,0,"/>
+  <tile id="3" terrain="0,0,,"/>
+  <tile id="4" terrain="0,0,,0"/>
+  <tile id="57" terrain=",,,0"/>
+  <tile id="58" terrain=",,0,"/>
+  <tile id="59" terrain="0,,0,"/>
+  <tile id="60" terrain="0,0,0,0"/>
+  <tile id="61" terrain=",0,,0"/>
+  <tile id="114" terrain=",0,,"/>
+  <tile id="115" terrain="0,,,"/>
+  <tile id="116" terrain="0,,0,0"/>
+  <tile id="117" terrain=",,0,0"/>
+  <tile id="118" terrain=",0,0,0"/>
+ </tileset>
+ <layer name="Grass" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJydkzEOACAIA5n4Fv//lTtpr8SBiKC1UJyqmmW9fNrTvR1T8Qbf4bcwxS/xdHl3xnHdnFyecNNKeFd9qFbq50V3Zz+9Jf3TXCg+NBtXfV299GcU3qV290aqIfFX+jyOEyS7
+  </data>
+ </layer>
+ <layer name="Dirt_Path" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjZGBgYCQS2zFAwExGBjggVi9M/2YmBoZpSPrLSMDlWOwnB4D0ezFRpr+ZQv2UAGrp9yHTDzD9rRTqRwangWJn0PBZHP4k1f9VaO48B9R/CYqJAdVMCPUgXIvF3+SGJQwgh6UHEWbhU9NIhH6YGgDXWBy1
+  </data>
+ </layer>
+ <layer name="Ground_Decals" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYMAOepmQ2MwMDTiU4QUwMx4BaWlmCB4Fgw+kMBFW85iRMv2jYHACAIIJBP8=
+  </data>
+ </layer>
+ <layer name="Trees" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2AUjFQAAAQAAAE=
+  </data>
+ </layer>
+ <layer name="House" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFwwFcYWFguEoA4wO8rAwMfFgwzNxrBPS7AdW6Y8Ewc/lZyfMXzFwPMvWPAvwAAJgwDYE=
+  </data>
+ </layer>
+ <layer name="House_Roof" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFIHCIhYHhOB58mAW//t8geVYCmAz9MPE/BOw3wWE+sfoJmWtKwP2jYGgCANByDg4=
+  </data>
+ </layer>
+ <layer name="House_Decals" width="16" height="16">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtASHWBgYjgPxYRbyzdBhpJ578AEvRlSa2uaSC5So44xRgAUAAFW8A4k=
+  </data>
+ </layer>
+</map>
