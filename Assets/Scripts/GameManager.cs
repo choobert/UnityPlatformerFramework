@@ -2,7 +2,7 @@
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
-public enum GameState {NullState, MainMenu, Game, PauseMenu}
+public enum GameState {NullState, MainMenu, Game, PauseMenu, Dialogue}
 public delegate void OnStateChangeHandler();
 
 public class GameManager : MonoBehaviour {
@@ -10,7 +10,8 @@ public class GameManager : MonoBehaviour {
 	public const string PLAYER_TAG = "Player";
 	
 	private static GameManager _instance;
-	
+	private static DialogueManager _dialogueManager;
+
 	private static MainMenu _mainmenu;   
 	private static HUD _hud;
 	private static Settings _settings;
@@ -18,7 +19,6 @@ public class GameManager : MonoBehaviour {
 	
 	public event OnStateChangeHandler OnStateChange;
 	public GameState gameState {get; private set;}
-	
 	
 	/*
 	* Find/Create/Return our one and only Game Manager object
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour {
 				_instance = Object.FindObjectOfType<GameManager>();
 			}
 			
-			// If we still dont have an instance, one must not be created
+			// If we still dont have an instance, it must not exist,
 			// so lets create our own and prevent it from being deleted
 			// when the level changes
 			if (_instance == null)
@@ -53,6 +53,11 @@ public class GameManager : MonoBehaviour {
 				GameObject gui = (GameObject) Instantiate(Resources.Load ("GUI/MainCanvas"), new Vector3(), Quaternion.identity);
 				gui.name = "_GUI";
 				DontDestroyOnLoad(gui);
+
+				_dialogueManager = DialogueManager.Instance;
+				if (_dialogueManager == null) {
+					Debug.LogError ("Failed to Instantiate DialogueManager");
+				}
 
 				_mainmenu = MainMenu.Instance;
 				if (_mainmenu == null) {

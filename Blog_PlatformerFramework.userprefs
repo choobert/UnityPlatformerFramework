@@ -1,12 +1,9 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GUI\HUD.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DialogueManager.cs">
     <Files>
-      <File FileName="Assets\Scripts\GameManager.cs" Line="57" Column="1" />
-      <File FileName="Assets\Scripts\GUI\MainMenu.cs" Line="27" Column="5" />
-      <File FileName="Assets\Scripts\GUI\Settings.cs" Line="30" Column="5" />
-      <File FileName="Assets\Scripts\GUI\HUD.cs" Line="104" Column="13" />
-      <File FileName="Assets\Scripts\GUI\Quit.cs" Line="60" Column="4" />
+      <File FileName="Assets\Scripts\DialogueManager.cs" Line="56" Column="10" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="5" Column="70" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
