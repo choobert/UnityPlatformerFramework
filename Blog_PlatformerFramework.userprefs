@@ -1,9 +1,12 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\DialogueManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestStarted.cs">
     <Files>
-      <File FileName="Assets\Scripts\DialogueManager.cs" Line="56" Column="10" />
-      <File FileName="Assets\Scripts\GameManager.cs" Line="5" Column="70" />
+      <File FileName="Assets\Scripts\GameManager.cs" Line="1" Column="1" />
+      <File FileName="Assets\Scripts\DialogueManager.cs" Line="94" Column="34" />
+      <File FileName="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestAvail.cs" Line="19" Column="11" />
+      <File FileName="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestCompleted.cs" Line="19" Column="11" />
+      <File FileName="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestStarted.cs" Line="19" Column="11" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

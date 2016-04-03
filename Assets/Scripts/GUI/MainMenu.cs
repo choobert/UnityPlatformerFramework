@@ -51,7 +51,6 @@ public class MainMenu : MonoBehaviour {
 	
 	private static void HandleOnStateChange ()
 	{
-		Debug.Log ("Game State changing to: " + _gm.gameState);
 		if (_gm.gameState == GameState.MainMenu) {
 			mainMenuPanel.SetActive(true);
 		}

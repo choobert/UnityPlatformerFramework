@@ -12,16 +12,14 @@ public class DialogueManager : MonoBehaviour {
 	private const string NPCS_XML_PATH = "GameData/NPCs";
 	private const string DIALOGUE_XML_PATH = "GameData/Dialogue";
 
-	/*
-	private Dictionary<ConditionType, Condition> conditionDictionary;
+	//private Dictionary<ConditionType, Condition> conditionDictionary;
 	private Dictionary<string, NPC_XML> npcDictionary;
-	private Dictionary<string, MessageXML> questionsDictionary;
-	private Dictionary<string, MessageXML> answersDictionary;
+	private Dictionary<string, Dialogue_Message_XML> questionsDictionary;
+	private Dictionary<string, Dialogue_Message_XML> answersDictionary;
 
-	private List<AnswerXML> currentAnswers;
+	private List<NPC_Answer_XML> currentAnswers;
 
-	private DialoguePanel dialoguePanel;
-	*/
+	private Dialogue dialoguePanel;
 
 	public OnDialogueCompleteHandler OnDialogueComplete;
 
@@ -45,20 +43,55 @@ public class DialogueManager : MonoBehaviour {
 				_gm = GameManager.Instance;
 				_instance = _gm.gameObject.AddComponent<DialogueManager> ();
 
-				// Set up the listeners to the GameManager events
-				_gm.OnStateChange += _instance.OnStateChange;
+				// Create our dictionaries
+				_instance.npcDictionary = NPC_Collection.GetDictionary (NPCS_XML_PATH);
 			}
 
 			return _instance;
 		}
 	}
 
-	private void OnStateChange() {
-		if (GameManager.Instance.gameState == GameState.Dialogue) {
-			BeginDialogue ();
-		}
+	public void BeginDialogue(string npcId) {
+		NPC_XML dialogue = _instance.npcDictionary [npcId];
+		_instance.UpdateDialogue(GetFirstPassingCondition(npcId, dialogue.conditions));
+		_instance.dialoguePanel.Launch ();
 	}
 
-	private void BeginDialogue() {
+	private void UpdateDialogue(NPC_Condition_XML trueCondition) {
+		currentAnswers = trueCondition.question.answers;
+
+		List<Dialogue_Message_XML> tempAnswers = new List<Dialogue_Message_XML> ();
+		foreach (NPC_Answer_XML a in currentAnswers) {
+			tempAnswers.Add (answersDictionary [a.id]);
+		}
+
+		dialoguePanel.UpdateMessages (questionsDictionary [trueCondition.question.id], tempAnswers);
+	}
+
+	private NPC_Condition_XML GetFirstPassingCondition(string npcId, List<NPC_Condition_XML> conditions) {
+		foreach (NPC_Condition_XML cXML in conditions) {
+			NPC_Condition c = ConditionXMLToCondition (npcId, cXML);
+			if (c.IsConditionMet ()) {
+				return cXML;
+			}
+		}
+
+		return null;
+	}
+
+	private NPC_Condition ConditionXMLToCondition(string npcId, NPC_Condition_XML xml) {
+		switch (xml.GetConditionType ()) {
+		case NPC_Condition_Type.HasItemReq:
+			return new NPCConditionHasItem (xml.item);
+		case NPC_Condition_Type.QuestAvailReq:
+			return new NPCConditionQuestAvail(npcId);
+		case NPC_Condition_Type.QuestStartedReq:
+			return new NPCConditionQuestStarted (npcId);
+		case NPC_Condition_Type.QuestCompletedReq:
+			return new NPCConditionQuestCompleted (npcId);
+		case NPC_Condition_Type.Default:
+		default:
+			return new NPCConditionDefault();
+		}
 	}
 }

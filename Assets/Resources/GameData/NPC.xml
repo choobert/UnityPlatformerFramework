@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<NPCCollection>
+  <NPCs>
+    <NPC id="Bob">
+      <Condition type="QuestAvail">
+        <Question id="q.quest">
+          <Answer id="a.quest.yes">
+            <Condition type="Default">
+              <Question id="q.details">
+                <Answer id="a.details.accept"></Answer>
+                <Answer id="a.details.decline"></Answer>
+               </Question>
+            </Condition>
+          </Answer>
+          <Answer id="a.quest.no"></Answer>
+        </Question>
+      </Condition>
+      <Condition type="QuestStarted">
+        <Question id="q.status">
+          <Answer id="a.status.help">
+            <Condition type="Default">
+              <Question id="q.details">
+                <Answer id="a.details.accept" action="player.joinPirates()"></Answer>
+              </Question>
+            </Condition>
+          </Answer>
+          <Answer id="a.status.complete">
+            <Condition type="QuestComplete">
+              <Question id="q.complete">
+                <Answer id="a.complete.end"></Answer>
+              </Question>
+            </Condition>
+          </Answer>
+        </Question>
+      </Condition>
+    </NPC>
+  </NPCs>
+</NPCCollection>

@@ -4,8 +4,8 @@ using System.Collections;
 public class PlayerMovement : MonoBehaviour 
 {
 	
-	public int movementSpeed = 10;
-	public float jumpForce = 10.0f;
+	public int movementSpeed = 5;
+	public float jumpForce = 5.0f;
 	
 	private bool jump = false;
 	private bool grounded = false;

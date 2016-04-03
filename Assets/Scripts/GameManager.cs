@@ -113,5 +113,10 @@ public class GameManager : MonoBehaviour {
 			Debug.Log("Changing timeScale from: " + Time.timeScale + " to 0");
 			Time.timeScale = 0;
 		}
+		else if (_instance.gameState == GameState.Dialogue)
+		{
+			Debug.Log("Changing timeScale from: " + Time.timeScale + " to 0");
+			Time.timeScale = 0;
+		}
 	}
 }

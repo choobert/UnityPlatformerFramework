@@ -18,8 +18,6 @@ public class Level : MonoBehaviour {
 		_gm.SetGameState(levelLoadGameState);
 	}
 	
-	void HandleOnStateChange ()
-	{
-		Debug.Log ("Game State changing to: " + _gm.gameState);
+	void HandleOnStateChange() {
 	}
 }

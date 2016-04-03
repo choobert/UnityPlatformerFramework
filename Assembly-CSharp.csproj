@@ -46,16 +46,35 @@
   </ItemGroup>
   <ItemGroup>
      <Compile Include="Assets\Scripts\DialogueManager.cs" />
+     <Compile Include="Assets\Scripts\GUI\Dialogue.cs" />
      <Compile Include="Assets\Scripts\GUI\HUD.cs" />
      <Compile Include="Assets\Scripts\GUI\MainMenu.cs" />
      <Compile Include="Assets\Scripts\GUI\Quit.cs" />
      <Compile Include="Assets\Scripts\GUI\ScreenFader.cs" />
      <Compile Include="Assets\Scripts\GUI\Settings.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\Dialogue\Dialogue_Collection.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\Dialogue\Dialogue_Message_XML.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionDefault.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionHasItem.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestAvail.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestCompleted.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\Conditions\NPCConditionQuestStarted.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_Answer_XML.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_Collection.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_Condition.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_Condition_XML.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_Question_XML.cs" />
+     <Compile Include="Assets\Scripts\GameDataLoaders\NPC\NPC_XML.cs" />
      <Compile Include="Assets\Scripts\GameManager.cs" />
      <Compile Include="Assets\Scripts\Level.cs" />
+     <Compile Include="Assets\Scripts\NPCManager.cs" />
+     <Compile Include="Assets\Scripts\NPCs\NPC.cs" />
+     <Compile Include="Assets\Scripts\NPCs\QuestGiver.cs" />
      <Compile Include="Assets\Scripts\Player\Bullet.cs" />
      <Compile Include="Assets\Scripts\Player\PlayerMovement.cs" />
      <Compile Include="Assets\Scripts\Player\ShootWeapon.cs" />
+     <None Include="Assets\Resources\GameData\NPC.xml" />
+     <None Include="Assets\Resources\GameData\Dialogue.xml" />
  <Reference Include="UnityEngine.UI">
  <HintPath>D:/Programs/Unity/Editor/Data/UnityExtensions/Unity/GUISystem/UnityEngine.UI.dll</HintPath>
  </Reference>

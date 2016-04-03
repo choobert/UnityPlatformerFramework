@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Dialogue>
+  <Questions>
+    <Question id="q.quest">
+      <text lang="en">Can I interest you in a quest?</text>
+    </Question>
+    <Question id="q.details">
+      <text lang="en">Awesome! There is buried treasure and I have the treasure map! But, you must promise to split the treasure 50/50!</text>
+    </Question>
+    <Question id="q.complete">
+      <text lang="en">Woah! You really did it! Thank you so much!!</text>
+    </Question>
+  </Questions>
+  <Answers>
+    <Answer id="a.quest.yes">
+      <text lang="en">Sure!</text>
+    </Answer>
+    <Answer id="a.quest.no">
+      <text lang="en">Nope!</text>
+    </Answer>
+    <Answer id="a.details.accept">
+      <text lang="en">Arr!</text>
+    </Answer>
+    <Answer id="a.details.decline">
+      <text lang="en">Ehh... Who wants to be rich anyway?</text>
+    </Answer>
+    <Answer id="a.status.help">
+      <text lang="en">Can you remind me what I was doing?</text>
+    </Answer>
+    <Answer id="a.status.complete">
+      <text lang="en">I found the treasure!</text>
+    </Answer>
+    <Answer id="a.complete.end">
+      <text lang="en">Now to go buy a castle!</text>
+    </Answer>
+  </Answers>
+</Dialogue>

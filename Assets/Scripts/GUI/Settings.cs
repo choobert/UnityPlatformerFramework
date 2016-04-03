@@ -67,8 +67,6 @@ public class Settings : MonoBehaviour {
 		displaySettings(false);
 	}
 
-	private static void onStateChange ()
-	{
-		Debug.Log ("Game State changing to: " + _gm.gameState);
+	private static void onStateChange() {
 	}
 }
