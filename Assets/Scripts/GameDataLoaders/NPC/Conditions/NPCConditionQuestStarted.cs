@@ -13,7 +13,7 @@ public class NPCConditionQuestStarted : NPC_Condition {
 	}
 
 	public override bool IsConditionMet() {
-		NPC npc = NPCManager.GetNPCByID (npcId);
+		NPC npc = NPCManager.Instance.GetNPCByID (npcId);
 
 		if (npc is QuestGiver) {
 			return ((QuestGiver)npc).IsQuestStarted ();

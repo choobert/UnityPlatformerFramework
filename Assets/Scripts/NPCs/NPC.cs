@@ -7,10 +7,12 @@ public class NPC : MonoBehaviour {
 
 	private bool talkWhenWithinRange = false;
 
-	//TODO: Remove - for testing only!
 	private void Start() {
-		TalkWhenWithinRange ();
-	}
+        // Inform the NPC Manager of my existence
+        NPCManager.Instance.addNPC(id, this);
+
+        TalkWhenWithinRange(); //TODO: Remove - for testing only!
+    }
 
 	public void TalkWhenWithinRange() {
 		talkWhenWithinRange = true;

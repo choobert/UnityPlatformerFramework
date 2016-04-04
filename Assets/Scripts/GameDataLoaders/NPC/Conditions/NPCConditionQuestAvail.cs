@@ -13,12 +13,16 @@ public class NPCConditionQuestAvail : NPC_Condition {
 	}
 
 	public override bool IsConditionMet() {
-		NPC npc = NPCManager.GetNPCByID (npcId);
+		NPC npc = NPCManager.Instance.GetNPCByID (npcId);
 
-		if (npc is QuestGiver) {
-			return ((QuestGiver)npc).IsQuestAvail ();
-		} else {
-			return false;
-		}
+        try
+        {
+            QuestGiver qg = (QuestGiver)npc;
+            return qg.IsQuestAvail();
+        }
+        catch
+        {
+            return false;
+        }
 	}
 }

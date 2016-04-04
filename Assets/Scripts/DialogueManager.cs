@@ -8,8 +8,7 @@ public class DialogueManager : MonoBehaviour {
 
 	private static DialogueManager _instance;
 	private static GameManager _gm;
-
-	private const string NPCS_XML_PATH = "GameData/NPCs";
+    
 	private const string DIALOGUE_XML_PATH = "GameData/Dialogue";
 
 	//private Dictionary<ConditionType, Condition> conditionDictionary;
@@ -44,7 +43,7 @@ public class DialogueManager : MonoBehaviour {
 				_instance = _gm.gameObject.AddComponent<DialogueManager> ();
 
 				// Create our dictionaries
-				_instance.npcDictionary = NPC_Collection.GetDictionary (NPCS_XML_PATH);
+				_instance.npcDictionary = NPC_Collection.Instance.GetDictionary ();
 			}
 
 			return _instance;
@@ -52,12 +51,15 @@ public class DialogueManager : MonoBehaviour {
 	}
 
 	public void BeginDialogue(string npcId) {
-		NPC_XML dialogue = _instance.npcDictionary [npcId];
+        NPC_XML dialogue = _instance.npcDictionary [npcId];
 		_instance.UpdateDialogue(GetFirstPassingCondition(npcId, dialogue.conditions));
 		_instance.dialoguePanel.Launch ();
 	}
 
 	private void UpdateDialogue(NPC_Condition_XML trueCondition) {
+
+        Debug.LogWarning(trueCondition);
+
 		currentAnswers = trueCondition.question.answers;
 
 		List<Dialogue_Message_XML> tempAnswers = new List<Dialogue_Message_XML> ();
@@ -71,6 +73,10 @@ public class DialogueManager : MonoBehaviour {
 	private NPC_Condition_XML GetFirstPassingCondition(string npcId, List<NPC_Condition_XML> conditions) {
 		foreach (NPC_Condition_XML cXML in conditions) {
 			NPC_Condition c = ConditionXMLToCondition (npcId, cXML);
+
+            Debug.LogWarning(c.IsConditionMet());
+
+
 			if (c.IsConditionMet ()) {
 				return cXML;
 			}

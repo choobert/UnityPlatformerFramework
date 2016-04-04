@@ -6,11 +6,35 @@ using System.Xml.Serialization;
 [XmlRoot("NPCCollection")]
 public class NPC_Collection {
 
-	[XmlArray("NPCs")]
-	[XmlArrayItem("NPC")]
-	public static List<NPC_XML> npcs = new List<NPC_XML> ();
+    private const string NPCS_XML_PATH = "GameData/NPC";
 
-	public static NPC_Collection Load(string path) {
+    private static NPC_Collection _instance;
+    
+
+    [XmlArray("NPCs")]
+	[XmlArrayItem("NPC")]
+	public List<NPC_XML> npcs = new List<NPC_XML> ();
+
+
+    /*
+	* Find/Create/Return our one and only NPC Collection
+	* for the game
+	**/
+    public static NPC_Collection Instance
+    {
+        get
+        {
+            // If not exists, read in the NPC Collection XML
+            if (_instance == null)
+            {
+                _instance = Load(NPCS_XML_PATH);
+            }
+
+            return _instance;
+        }
+    }
+    
+    public static NPC_Collection Load(string path) {
 		TextAsset xml = Resources.Load<TextAsset> (path);
 		XmlSerializer serializer = new XmlSerializer (typeof(NPC_Collection));
 		StringReader reader = new StringReader (xml.text);
@@ -19,11 +43,7 @@ public class NPC_Collection {
 		return items;
 	}
 
-	public static Dictionary<string, NPC_XML> GetDictionary(string path) {
-		if (npcs.Count < 1) {
-			Load (path);
-		}
-
+	public Dictionary<string, NPC_XML> GetDictionary() {
 		Dictionary<string, NPC_XML> dict = new Dictionary<string, NPC_XML> ();
 		foreach(NPC_XML n in npcs) {
 			dict.Add (n.id, n);
