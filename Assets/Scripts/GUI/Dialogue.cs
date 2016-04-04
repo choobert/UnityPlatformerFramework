@@ -9,8 +9,6 @@ public class Dialogue : MonoBehaviour {
 	public delegate void AnswerSelection (int answerIndex);
 	public event AnswerSelection AnswerSelectionEvent;
 
-	public EventSystem eventSystem;
-
 	public GameObject panel;
 	public Text question;
 	public Text answer0;
@@ -19,6 +17,12 @@ public class Dialogue : MonoBehaviour {
 
 	private Dialogue_Message_XML currentQuestionMessage;
 	private List<Dialogue_Message_XML> currentAnswerMessageList;
+
+	private EventSystem eventSystem;
+
+	private void Start() {
+		eventSystem = Object.FindObjectOfType<EventSystem> ();
+	}
 
 	public void Launch() {
 		panel.SetActive (true);
@@ -37,7 +41,6 @@ public class Dialogue : MonoBehaviour {
 		if (currentAnswerMessageList.Count == 0) {
 			Debug.LogError ("No answers associated with question: " + question.id);
 		} else {
-
 			answer0.text = currentAnswerMessageList [0].text;
 
 			// disable the other message buttons (they will be re-enabled if they are used)

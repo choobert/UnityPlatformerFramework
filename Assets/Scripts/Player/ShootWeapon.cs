@@ -47,8 +47,6 @@ public class ShootWeapon : MonoBehaviour {
 		int shootX = (int) shootDirection.x;
 		
 		bulletInstance.velocity = new Vector2(shootX * speed, shootDirection.y * speed);
-		
-		Debug.Log (bulletInstance.velocity.ToString());
 	}
 	
 	void AttackMelee() {

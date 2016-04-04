@@ -8,17 +8,12 @@ public class DialogueManager : MonoBehaviour {
 
 	private static DialogueManager _instance;
 	private static GameManager _gm;
-    
-	private const string DIALOGUE_XML_PATH = "GameData/Dialogue";
 
 	//private Dictionary<ConditionType, Condition> conditionDictionary;
-	private Dictionary<string, NPC_XML> npcDictionary;
-	private Dictionary<string, Dialogue_Message_XML> questionsDictionary;
-	private Dictionary<string, Dialogue_Message_XML> answersDictionary;
-
 	private List<NPC_Answer_XML> currentAnswers;
 
 	private Dialogue dialoguePanel;
+	private string npcId;
 
 	public OnDialogueCompleteHandler OnDialogueComplete;
 
@@ -42,8 +37,17 @@ public class DialogueManager : MonoBehaviour {
 				_gm = GameManager.Instance;
 				_instance = _gm.gameObject.AddComponent<DialogueManager> ();
 
-				// Create our dictionaries
-				_instance.npcDictionary = NPC_Collection.Instance.GetDictionary ();
+				// Lets find our canvas that we must add ourselves to
+				GameObject guiCanvas = GameObject.Find ("_GUI");				
+
+				// Now that we have created the Base object we need to add our HUD components to it
+				GameObject go = (GameObject) Instantiate(Resources.Load ("GUI/DialoguePanel"), new Vector3(), Quaternion.identity);
+				go.transform.SetParent(guiCanvas.transform);
+				go.GetComponent<RectTransform>().localScale = new Vector3(1, 1, 1);
+
+				_instance.dialoguePanel = go.GetComponent<Dialogue> ();
+				_instance.dialoguePanel.AnswerSelectionEvent += _instance.AnswerSelection;
+
 			}
 
 			return _instance;
@@ -51,37 +55,41 @@ public class DialogueManager : MonoBehaviour {
 	}
 
 	public void BeginDialogue(string npcId) {
-        NPC_XML dialogue = _instance.npcDictionary [npcId];
-		_instance.UpdateDialogue(GetFirstPassingCondition(npcId, dialogue.conditions));
+		this.npcId = npcId;
+
+		NPC_XML dialogue = NPC_Collection.Instance.GetNPC(npcId);
+		_instance.UpdateDialogue(GetFirstPassingCondition(dialogue.conditions));
 		_instance.dialoguePanel.Launch ();
 	}
 
+	public void EndDialogue() {
+
+		if (OnDialogueComplete != null) {
+			OnDialogueComplete ();
+		}
+
+		_gm.SetGameState (GameState.Game);
+	}
+
 	private void UpdateDialogue(NPC_Condition_XML trueCondition) {
-
-        Debug.LogWarning(trueCondition);
-
 		currentAnswers = trueCondition.question.answers;
 
 		List<Dialogue_Message_XML> tempAnswers = new List<Dialogue_Message_XML> ();
 		foreach (NPC_Answer_XML a in currentAnswers) {
-			tempAnswers.Add (answersDictionary [a.id]);
+			tempAnswers.Add (Dialogue_Collection.Instance.GetAnswer(a.id));
 		}
 
-		dialoguePanel.UpdateMessages (questionsDictionary [trueCondition.question.id], tempAnswers);
+		dialoguePanel.UpdateMessages (Dialogue_Collection.Instance.GetQuestion(trueCondition.question.id), tempAnswers);
 	}
 
-	private NPC_Condition_XML GetFirstPassingCondition(string npcId, List<NPC_Condition_XML> conditions) {
+	private NPC_Condition_XML GetFirstPassingCondition(List<NPC_Condition_XML> conditions) {
 		foreach (NPC_Condition_XML cXML in conditions) {
 			NPC_Condition c = ConditionXMLToCondition (npcId, cXML);
-
-            Debug.LogWarning(c.IsConditionMet());
-
 
 			if (c.IsConditionMet ()) {
 				return cXML;
 			}
 		}
-
 		return null;
 	}
 
@@ -98,6 +106,20 @@ public class DialogueManager : MonoBehaviour {
 		case NPC_Condition_Type.Default:
 		default:
 			return new NPCConditionDefault();
+		}
+	}
+
+	private void AnswerSelection(int index) {
+		Debug.Log ("Received Answer Selection: " + index);
+		Debug.Log (currentAnswers.Count);
+		NPC_Answer_XML a = currentAnswers [index];
+
+		NPC_Condition_XML c = GetFirstPassingCondition (a.conditions);
+		if (c != null) {
+			UpdateDialogue (c);
+		} else {
+			dialoguePanel.Close ();
+			EndDialogue ();
 		}
 	}
 }

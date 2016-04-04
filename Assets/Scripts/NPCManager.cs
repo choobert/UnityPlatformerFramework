@@ -39,8 +39,6 @@ public class NPCManager : MonoBehaviour {
     }
 
     public void addNPC(string npcId, NPC npc) {
-
-        Debug.LogWarning("Adding: " + npcId);
         npcs.Add(npcId, npc);
     }
 
