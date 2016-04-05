@@ -11,8 +11,11 @@ public class ShootWeapon : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetMouseButtonDown(0))
-			Shoot ();			
+		if (GameManager.Instance.gameState == GameState.Game) {
+			if (Input.GetMouseButtonDown(0)) {
+				Shoot ();
+			}
+		}
 	}
 	
 	void Shoot() {
